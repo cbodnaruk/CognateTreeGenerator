@@ -42,4 +42,8 @@
         End If
     End Sub
 
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Form2.Show()
+        Form3.Show()
+    End Sub
 End Class
