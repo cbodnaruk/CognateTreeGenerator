@@ -161,6 +161,27 @@ Module Module1
         file.WriteLine("FORMAT DATATYPE=STANDARD MISSING=? GAP=-  SYMBOLS=""01"";")
         file.WriteLine("CHARSTATELABELS")
         'build charstatelabel table
+        For i = 0 To 499
+            If i = 499 Then
+                For j = 1 To NumberOfAlternates(i)
+                    If j = NumberOfAlternates(i) Then
+                        file.WriteLine(vbTab & vbTab & CumPos & " cog" & i & "_" & j & ";")
+                        CumPos += 1
+                    Else
+                        file.WriteLine(vbTab & vbTab & CumPos & " cog" & i & "_" & j & ",")
+                        CumPos += 1
+                    End If
+
+                Next
+            Else
+                For j = 1 To NumberOfAlternates(i)
+                    file.WriteLine(vbTab & vbTab & CumPos & " cog" & i & "_" & j & ",")
+                    CumPos += 1
+                Next
+            End If
+
+        Next
+        CumPos = 1
 
         file.WriteLine("MATRIX")
         For i = (CurrentMaxNodeCreated - CurrentLayerSize + 1) To CurrentMaxNodeCreated
@@ -175,7 +196,7 @@ Module Module1
         'list out groups of cognates
         file.WriteLine("begin assumptions;")
         For i = 0 To 499
-            file.WriteLine(vbTab & "charset cog" & i & " = " & CumPos & "-" & CumPos + NumberOfAlternates(i) & ";")
+            file.WriteLine(vbTab & "charset cog" & i & " = " & CumPos & "-" & CumPos + NumberOfAlternates(i) - 1 & ";")
             CumPos += NumberOfAlternates(i)
         Next
         file.WriteLine("end;")
