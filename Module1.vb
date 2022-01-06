@@ -4,7 +4,7 @@ Module Module1
     Public CognateWeighting
     Public CurrentNode As Integer
     Public CurrentMaxNodeCreated As Integer
-    Public NodeArray(1, 0) As Integer
+    Public NodeArray(3, 0) As Integer 'parentID, change rate, location x,y
     Public CognateArray(499, 0)
     Public NumberOfAlternates(499) As Integer
     Public CurrentLayerSize As Integer
@@ -60,9 +60,15 @@ Module Module1
         Next
         NodeArray(1, 0) = Form1.TextBox2.Text
 
-        CreateDaughter(CurrentNode)
+        'mark origin node
+        NodeArray(2, 0) = GridChart.GridSize / 2
+        NodeArray(3, 0) = GridChart.GridSize / 2
+        WritePointVis(NodeArray(2, 0), NodeArray(3, 0), "o")
+
+
+        CreateDaughter(CurrentNode, False)
         'Bifurcate
-        CreateDaughter(CurrentNode)
+        CreateDaughter(CurrentNode, True)
         PreviousLayerEnd = 0
         'Now loops subsequent nodes
         Do Until CurrentLayerSize > TotalDaughterGoal
@@ -79,10 +85,10 @@ Module Module1
                     CognateChange(CognateChangeIndex, CurrentNode)
                 Next
 
-                CreateDaughter(CurrentNode)
-                If RandInt(100) < Form1.TextBox3.Text Then
+                CreateDaughter(CurrentNode, False)
+                If RandInt(100) <= Form1.TextBox3.Text Then
                     'Bifurcate
-                    CreateDaughter(CurrentNode)
+                    CreateDaughter(CurrentNode, True)
                     BifCounter += 1
                     Form1.Label6.Text = BifCounter
                     Form1.Label6.Refresh()
@@ -255,17 +261,31 @@ Module Module1
         'each parent hsa the format (C)P or (C,C)P
         'Grandparent will appear ((C)P)G
     End Sub
-    Public Sub CreateDaughter(parent)
+    Public Sub CreateDaughter(parent, bi)
         'ReDim
         Dim DaughterId As Integer = CurrentMaxNodeCreated + 1
-        ReDim Preserve NodeArray(1, DaughterId)
+        ReDim Preserve NodeArray(3, DaughterId)
         ReDim Preserve CognateArray(NumberOfCognates, DaughterId)
+
+        'load cognates from parent
         For i = 0 To NumberOfCognates
             CognateArray(i, DaughterId) = CognateArray(i, parent)
         Next
+
+        'write metadata
         NodeArray(0, DaughterId) = parent
         NodeArray(1, DaughterId) = ChangeDevRate(parent)
+        NodeArray(2, DaughterId) = NodeArray(2, parent)
+        NodeArray(3, DaughterId) = NodeArray(3, parent)
         CurrentMaxNodeCreated = DaughterId
+        If bi = True Then
+            WalkNode(DaughterId, False)
+        Else
+            If RandInt(10) = 1 Then
+                WalkNode(DaughterId, True)
+            End If
+        End If
+
     End Sub
     Public Function ChangeDevRate(parent)
         If RandInt(20) < 4 Then
@@ -288,4 +308,62 @@ Module Module1
         Randomize()
         Return Int((max) * Rnd() + 1)
     End Function
+    Public Sub WritePointVis(x As Integer, y As Integer, cont As String)
+        Dim PointIndex = (((x - 1) * GridChart.GridSize) + y) - 1
+        With GridChart.LabelList(PointIndex)
+            If cont = "@" Then
+                If .Text = cont Then
+                    .Text = cont & "|"
+                    .Refresh()
+                ElseIf .Text = "@|" Then
+                    .Text = "@||"
+                    .Refresh()
+                ElseIf .Text = "@||" Then
+                    .Text = "@|||"
+                    .Refresh()
+                Else
+                    .Text = cont
+                    .Refresh()
+                End If
+
+            ElseIf cont = "-" And .Text = "@|" Then
+                    .Text = "@"
+                    .Refresh()
+                Else
+                    .Text = cont
+                .Refresh()
+            End If
+        End With
+    End Sub
+    Public Sub WalkNode(NodeId, RemainingNode)
+        Dim ParentNode = NodeArray(0, NodeId)
+        'select direction
+        Dim dir = RandInt(4)
+        Dim dist = RandInt(4)
+
+        'write new node
+        If dir = 1 Then
+            If NodeArray(3, NodeId) - dist > 1 Then
+                NodeArray(3, NodeId) -= dist
+            End If
+        ElseIf dir = 2 Then
+            If NodeArray(2, NodeId) + dist < GridChart.GridSize Then
+                NodeArray(2, NodeId) += dist
+            End If
+        ElseIf dir = 3 Then
+            If NodeArray(3, NodeId) + dist < GridChart.GridSize Then
+                NodeArray(3, NodeId) += dist
+            End If
+        ElseIf dir = 4 Then
+            If NodeArray(2, NodeId) - dist > 1 Then
+                NodeArray(2, NodeId) -= dist
+            End If
+        End If
+
+        WritePointVis(NodeArray(2, NodeId), NodeArray(3, NodeId), "@")
+        'erase parent (write +)
+        If RemainingNode = True Then
+            WritePointVis(NodeArray(2, ParentNode), NodeArray(3, ParentNode), "-")
+        End If
+    End Sub
 End Module
