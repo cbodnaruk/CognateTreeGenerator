@@ -17,6 +17,7 @@
         TextBox3.Text = My.Settings.BifurChance
         TextBox4.Text = My.Settings.NumberOfCognates
         TextBox5.Text = My.Settings.GridSize
+        TextBox6.Text = My.Settings.PercentBorrowingChance
         GridChart.Show()
     End Sub
 
@@ -32,15 +33,17 @@
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If MsgBox("Reset generator?", vbYesNo) = vbYes Then
-            ReDim NodeArray(1, 0)
+            ReDim NodeArray(3, 0)
             ReDim CognateArray(My.Settings.NumberOfCognates, 0)
             Label4.Text = "0"
             Label5.Text = "0"
             Label6.Text = "0"
             Label8.Text = "0"
             Label10.Text = "0"
-            GridChart.Close()
-            GridChart.Show()
+            If Areal = True Then
+                GridChart.Close()
+                GridChart.Show()
+            End If
         End If
     End Sub
 
@@ -58,22 +61,49 @@
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
-        My.Settings.NoTerminalNodes = TextBox1.Text
+        Try
+            My.Settings.NoTerminalNodes = TextBox1.Text
+        Catch exc As InvalidCastException
+            If TextBox1.Text = "" Then
+            Else
+                TextBox1.Text = TextBox1.Text.Remove(TextBox1.Text.Length - 1, 1)
+            End If
+        End Try
 
     End Sub
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
-        My.Settings.CognateLoss = TextBox2.Text
-
+        Try
+            My.Settings.CognateLoss = TextBox2.Text
+        Catch exc As InvalidCastException
+            If TextBox2.Text = "" Then
+            Else
+                TextBox2.Text = TextBox2.Text.Remove(TextBox2.Text.Length - 1, 1)
+            End If
+        End Try
     End Sub
 
     Private Sub TextBox3_TextChanged(sender As Object, e As EventArgs) Handles TextBox3.TextChanged
-        My.Settings.BifurChance = TextBox3.Text
+        Try
+            My.Settings.BifurChance = TextBox3.Text
+        Catch exc As InvalidCastException
+            If TextBox3.Text = "" Then
+        Else
+            TextBox3.Text = TextBox3.Text.Remove(TextBox3.Text.Length - 1, 1)
+        End If
+        End Try
     End Sub
 
     Private Sub TextBox4_TextChanged(sender As Object, e As EventArgs) Handles TextBox4.TextChanged
-        NumberOfCognates = TextBox4.Text
-        My.Settings.NumberOfCognates = TextBox4.Text
+        Try
+            NumberOfCognates = TextBox4.Text
+            My.Settings.NumberOfCognates = TextBox4.Text
+        Catch exc As InvalidCastException
+            If TextBox4.Text = "" Then
+            Else
+                TextBox4.Text = TextBox4.Text.Remove(TextBox4.Text.Length - 1, 1)
+            End If
+        End Try
     End Sub
 
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
@@ -96,21 +126,40 @@
         If TextBox5.Text = "" Then
             MsgBox("Please Enter a Number", vbExclamation)
         End If
-        If TextBox5.Text <> PrevGridSize And TextBox5.Text > 70 Then
-            If MsgBox("Reload Grid Chart? Values higher then 70 may crash program.", vbYesNo) = vbYes Then
+        If MsgBox("Reload Grid Chart?", vbYesNo) = vbYes Then
                 GridChart.Close()
-                GridChart.Show()
-            End If
-        Else
-
-            If MsgBox("Reload Grid Chart?", vbYesNo) = vbYes Then
-                GridChart.Close()
-                GridChart.Show()
-            End If
+            GridChart.Show()
         End If
+
     End Sub
 
     Private Sub TextBox5_Enter(sender As Object, e As EventArgs) Handles TextBox5.Enter
         PrevGridSize = TextBox5.Text
+    End Sub
+
+    Private Sub TextBox6_TextChanged(sender As Object, e As EventArgs) Handles TextBox6.TextChanged
+        Try
+            My.Settings.PercentBorrowingChance = TextBox6.Text
+        Catch exc As InvalidCastException
+            If TextBox6.Text = "" Then
+            Else
+                TextBox6.Text = TextBox6.Text.Remove(TextBox6.Text.Length - 1, 1)
+            End If
+        End Try
+
+    End Sub
+
+    Private Sub ArealCheck_CheckedChanged(sender As Object, e As EventArgs) Handles ArealCheck.CheckedChanged
+        If ArealCheck.Checked = True Then
+            Areal = True
+            GridChart.Show()
+            TextBox5.Enabled = True
+            TextBox6.Enabled = True
+        Else
+            Areal = False
+            GridChart.Close()
+            TextBox5.Enabled = False
+            TextBox6.Enabled = False
+        End If
     End Sub
 End Class

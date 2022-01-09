@@ -48,6 +48,16 @@ Partial Class MainDialogue
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.TextBox6 = New System.Windows.Forms.TextBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.ArealCheck = New System.Windows.Forms.CheckBox()
+        Me.TabControl1.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
         Me.SuspendLayout()
         '
         'StartButton
@@ -178,7 +188,7 @@ Partial Class MainDialogue
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(9, 267)
+        Me.Label11.Location = New System.Drawing.Point(3, 58)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(161, 13)
         Me.Label11.TabIndex = 16
@@ -186,7 +196,7 @@ Partial Class MainDialogue
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(195, 263)
+        Me.TextBox1.Location = New System.Drawing.Point(191, 55)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(100, 20)
         Me.TextBox1.TabIndex = 17
@@ -195,7 +205,7 @@ Partial Class MainDialogue
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(9, 292)
+        Me.Label12.Location = New System.Drawing.Point(3, 32)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(177, 13)
         Me.Label12.TabIndex = 18
@@ -203,7 +213,7 @@ Partial Class MainDialogue
         '
         'TextBox2
         '
-        Me.TextBox2.Location = New System.Drawing.Point(195, 289)
+        Me.TextBox2.Location = New System.Drawing.Point(191, 29)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(100, 20)
         Me.TextBox2.TabIndex = 19
@@ -212,7 +222,7 @@ Partial Class MainDialogue
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(9, 315)
+        Me.Label13.Location = New System.Drawing.Point(3, 84)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(180, 13)
         Me.Label13.TabIndex = 20
@@ -220,7 +230,7 @@ Partial Class MainDialogue
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(195, 315)
+        Me.TextBox3.Location = New System.Drawing.Point(191, 81)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(100, 20)
         Me.TextBox3.TabIndex = 21
@@ -229,7 +239,7 @@ Partial Class MainDialogue
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(94, 338)
+        Me.Label14.Location = New System.Drawing.Point(81, 104)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(223, 13)
         Me.Label14.TabIndex = 22
@@ -246,7 +256,7 @@ Partial Class MainDialogue
         '
         'TextBox4
         '
-        Me.TextBox4.Location = New System.Drawing.Point(195, 237)
+        Me.TextBox4.Location = New System.Drawing.Point(191, 3)
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(100, 20)
         Me.TextBox4.TabIndex = 24
@@ -254,7 +264,7 @@ Partial Class MainDialogue
         'Label15
         '
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(9, 240)
+        Me.Label15.Location = New System.Drawing.Point(3, 6)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(134, 13)
         Me.Label15.TabIndex = 25
@@ -263,7 +273,7 @@ Partial Class MainDialogue
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(9, 214)
+        Me.Label16.Location = New System.Drawing.Point(3, 25)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(105, 13)
         Me.Label16.TabIndex = 27
@@ -271,28 +281,101 @@ Partial Class MainDialogue
         '
         'TextBox5
         '
-        Me.TextBox5.Location = New System.Drawing.Point(195, 211)
+        Me.TextBox5.Location = New System.Drawing.Point(191, 22)
         Me.TextBox5.Name = "TextBox5"
         Me.TextBox5.Size = New System.Drawing.Size(100, 20)
         Me.TextBox5.TabIndex = 26
         '
-        'Form1
+        'TabControl1
+        '
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.TabControl1.Location = New System.Drawing.Point(0, 203)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        Me.TabControl1.Size = New System.Drawing.Size(333, 193)
+        Me.TabControl1.TabIndex = 28
+        '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.Label15)
+        Me.TabPage1.Controls.Add(Me.TextBox4)
+        Me.TabPage1.Controls.Add(Me.Label12)
+        Me.TabPage1.Controls.Add(Me.TextBox2)
+        Me.TabPage1.Controls.Add(Me.Label14)
+        Me.TabPage1.Controls.Add(Me.Label11)
+        Me.TabPage1.Controls.Add(Me.TextBox3)
+        Me.TabPage1.Controls.Add(Me.TextBox1)
+        Me.TabPage1.Controls.Add(Me.Label13)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(325, 167)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "General"
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.ArealCheck)
+        Me.TabPage2.Controls.Add(Me.Label18)
+        Me.TabPage2.Controls.Add(Me.TextBox6)
+        Me.TabPage2.Controls.Add(Me.Label17)
+        Me.TabPage2.Controls.Add(Me.Label16)
+        Me.TabPage2.Controls.Add(Me.TextBox5)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(325, 167)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "Areal Simulation"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(3, 51)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(152, 13)
+        Me.Label17.TabIndex = 28
+        Me.Label17.Text = "Base Borrowing Chance (in %):"
+        '
+        'TextBox6
+        '
+        Me.TextBox6.Location = New System.Drawing.Point(191, 48)
+        Me.TextBox6.Name = "TextBox6"
+        Me.TextBox6.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox6.TabIndex = 29
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Cursor = System.Windows.Forms.Cursors.Default
+        Me.Label18.Location = New System.Drawing.Point(3, 3)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(102, 13)
+        Me.Label18.TabIndex = 30
+        Me.Label18.Text = "Use Areal Simulator:"
+        '
+        'ArealCheck
+        '
+        Me.ArealCheck.AutoSize = True
+        Me.ArealCheck.Checked = True
+        Me.ArealCheck.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ArealCheck.Location = New System.Drawing.Point(191, 2)
+        Me.ArealCheck.Name = "ArealCheck"
+        Me.ArealCheck.Size = New System.Drawing.Size(15, 14)
+        Me.ArealCheck.TabIndex = 31
+        Me.ArealCheck.UseVisualStyleBackColor = True
+        '
+        'MainDialogue
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(333, 360)
-        Me.Controls.Add(Me.Label16)
-        Me.Controls.Add(Me.TextBox5)
-        Me.Controls.Add(Me.Label15)
-        Me.Controls.Add(Me.TextBox4)
+        Me.ClientSize = New System.Drawing.Size(333, 396)
+        Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Label14)
-        Me.Controls.Add(Me.TextBox3)
-        Me.Controls.Add(Me.Label13)
-        Me.Controls.Add(Me.TextBox2)
-        Me.Controls.Add(Me.Label12)
-        Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.Label11)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.Label9)
@@ -309,8 +392,13 @@ Partial Class MainDialogue
         Me.Controls.Add(Me.StartButton)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
-        Me.Name = "Form1"
+        Me.Name = "MainDialogue"
         Me.Text = "Tree Generator"
+        Me.TabControl1.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -342,4 +430,11 @@ Partial Class MainDialogue
     Friend WithEvents Label15 As Label
     Friend WithEvents Label16 As Label
     Friend WithEvents TextBox5 As TextBox
+    Friend WithEvents TabControl1 As TabControl
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents TabPage2 As TabPage
+    Friend WithEvents ArealCheck As CheckBox
+    Friend WithEvents Label18 As Label
+    Friend WithEvents TextBox6 As TextBox
+    Friend WithEvents Label17 As Label
 End Class

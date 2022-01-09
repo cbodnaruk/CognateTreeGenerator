@@ -9,6 +9,8 @@ Module Simulator
     Public NumberOfAlternates(My.Settings.NumberOfCognates) As Integer
     Public CurrentLayerSize As Integer
     Public NumberOfCognates As Integer
+    Public BorrowChance As Integer
+    Public Areal As Boolean
     Public Function GenerateCognateWeighting()
         Dim InitialValue(NumberOfCognates) As Integer
         Dim CumValue(NumberOfCognates) As Integer
@@ -48,6 +50,7 @@ Module Simulator
         Dim CognateChangeIndex As Integer
         Dim BifCounter As Integer = 0
         Dim LayerCounter As Integer = 1
+        BorrowChance = 1 / (My.Settings.PercentBorrowingChance / 100)
         CurrentNode = 0
         CurrentMaxNodeCreated = 0
         CurrentLayerSize = 1
@@ -60,11 +63,12 @@ Module Simulator
         Next
         NodeArray(1, 0) = MainDialogue.TextBox2.Text
 
-        'mark origin node
-        NodeArray(2, 0) = GridChart.GridSize / 2
-        NodeArray(3, 0) = GridChart.GridSize / 2
-        WritePointVis(NodeArray(2, 0), NodeArray(3, 0), "o")
-
+        If Areal = True Then
+            'mark origin node
+            NodeArray(2, 0) = GridChart.GridSize / 2
+            NodeArray(3, 0) = GridChart.GridSize / 2
+            WritePointVis(NodeArray(2, 0), NodeArray(3, 0), "o")
+        End If
 
         CreateDaughter(CurrentNode, False)
         'Bifurcate
@@ -274,17 +278,22 @@ Module Simulator
             CognateArray(i, DaughterId) = CognateArray(i, parent)
         Next
 
-        'check distance from other living nodes
-        For i = (parent + 1) To DaughterId - 1
-            distance = Rnd(Math.Sqrt((Math.Abs(NodeArray(2, DaughterId) - NodeArray(2, i)) ^ 2) + (Math.Abs(NodeArray(2, DaughterId) - NodeArray(2, i)) ^ 2)))
-            If distance < 6 Then
-                For j = distance To 6
-                    BorrowId = SelectCognate(CognateWeighting)
-                    CognateArray(BorrowId, DaughterId) = CognateArray(BorrowId, i)
-                Next
-            End If
-        Next
-        'borrow forms if close enough
+        'Borrowing Calculation
+        If Areal = True Then
+            'check distance from other living nodes
+            For i = (parent + 1) To DaughterId - 1
+                distance = Rnd(Math.Sqrt((Math.Abs(NodeArray(2, DaughterId) - NodeArray(2, i)) ^ 2) + (Math.Abs(NodeArray(2, DaughterId) - NodeArray(2, i)) ^ 2)))
+                If distance < 1 Then 'borrow forms if close enough
+
+                    For j = distance To 1
+                        If RandInt(BorrowChance) = 1 Then
+                            BorrowId = SelectCognate(CognateWeighting)
+                            CognateArray(BorrowId, DaughterId) = CognateArray(BorrowId, i)
+                        End If
+                    Next
+                End If
+            Next
+        End If
 
         'write metadata
         NodeArray(0, DaughterId) = parent
@@ -292,14 +301,17 @@ Module Simulator
         NodeArray(2, DaughterId) = NodeArray(2, parent)
         NodeArray(3, DaughterId) = NodeArray(3, parent)
         CurrentMaxNodeCreated = DaughterId
-        If bi = True Then
-            WalkNode(DaughterId, False)
-        Else
-            If RandInt(10) = 1 Then
-                WalkNode(DaughterId, True)
+
+        'step node away from parent
+        If Areal = True Then
+            If bi = True Then
+                WalkNode(DaughterId, False)
+            Else
+                If RandInt(10) = 1 Then
+                    WalkNode(DaughterId, True)
+                End If
             End If
         End If
-
     End Sub
     Public Function ChangeDevRate(parent)
         If RandInt(20) < 4 Then
@@ -323,31 +335,40 @@ Module Simulator
         Return Int((max) * Rnd() + 1)
     End Function
     Public Sub WritePointVis(x As Integer, y As Integer, cont As String)
-        Dim PointIndex = (((x - 1) * GridChart.GridSize) + y) - 1
+
+        Dim PointCode = (((y - 1) * GridChart.GridSize) + x) - 1 '-1 for zero based. This is the location code
+        Dim PointIndex 'this is the index within the lists (order of creation, not location)
+
+        If GridChart.LabelDataList.Contains(PointCode) Then 'if already exists
+            PointIndex = GridChart.LabelDataList.IndexOf(PointCode) 'look up index by location
+        Else
+            PointIndex = GridChart.Draw_Label(PointCode) 'create label and recieve index upon creation
+        End If
         With GridChart.LabelList(PointIndex)
-            If cont = "@" Then
-                If .Text = cont Then
-                    .Text = cont & "|"
-                    .Refresh()
-                ElseIf .Text = "@|" Then
-                    .Text = "@||"
-                    .Refresh()
-                ElseIf .Text = "@||" Then
-                    .Text = "@|||"
+                If cont = "@" Then
+                    If .Text = cont Then
+                        .Text = cont & "|"
+                        .Refresh()
+                    ElseIf .Text = "@|" Then
+                        .Text = "@||"
+                        .Refresh()
+                    ElseIf .Text = "@||" Then
+                        .Text = "@|||"
+                        .Refresh()
+                    Else
+                        .Text = cont
+                        .Refresh()
+                    End If
+
+                ElseIf cont = "-" And .Text = "@|" Then
+                    .Text = "@"
                     .Refresh()
                 Else
                     .Text = cont
                     .Refresh()
                 End If
+            End With
 
-            ElseIf cont = "-" And .Text = "@|" Then
-                .Text = "@"
-                .Refresh()
-            Else
-                .Text = cont
-                .Refresh()
-            End If
-        End With
     End Sub
     Public Sub WalkNode(NodeId, RemainingNode)
         Dim ParentNode = NodeArray(0, NodeId)

@@ -17,5 +17,8 @@
     <Setting Name="NumberOfCognates" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">499</Value>
     </Setting>
+    <Setting Name="PercentBorrowingChance" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
