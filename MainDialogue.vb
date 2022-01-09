@@ -1,4 +1,4 @@
-﻿Public Class Form1
+﻿Public Class MainDialogue
     Public PrevRandLoc As Integer = 0
     Public PrevGridSize
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click

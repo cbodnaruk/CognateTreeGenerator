@@ -1,5 +1,5 @@
 ﻿Imports System.Text
-Module Module1
+Module Simulator
 
     Public CognateWeighting
     Public CurrentNode As Integer
@@ -12,7 +12,7 @@ Module Module1
     Public Function GenerateCognateWeighting()
         Dim InitialValue(NumberOfCognates) As Integer
         Dim CumValue(NumberOfCognates) As Integer
-        Form1.ProgressText.Text = "Generating Cognate Weights..."
+        MainDialogue.ProgressText.Text = "Generating Cognate Weights..."
         For i = 0 To NumberOfCognates
             InitialValue(i) = RandInt(10)
             Console.WriteLine(InitialValue(i))
@@ -31,7 +31,7 @@ Module Module1
     Public Function SelectCognate(WeightPoints) As Integer
         Dim val = RandInt(WeightPoints(NumberOfCognates))
         Dim iter = 0
-        Form1.ProgressText.Text = "Selecting Random Cognate..."
+        MainDialogue.ProgressText.Text = "Selecting Random Cognate..."
         If val = WeightPoints(NumberOfCognates) Then
             iter = NumberOfCognates
         Else
@@ -51,14 +51,14 @@ Module Module1
         CurrentNode = 0
         CurrentMaxNodeCreated = 0
         CurrentLayerSize = 1
-        Form1.ProgressText.Text = "Generating Tree..."
-        Form1.ProgressText.Refresh()
+        MainDialogue.ProgressText.Text = "Generating Tree..."
+        MainDialogue.ProgressText.Refresh()
         'Runs this for the origin node
         For i = 0 To NumberOfCognates
             CognateArray(i, 0) = 1
             NumberOfAlternates(i) = 1
         Next
-        NodeArray(1, 0) = Form1.TextBox2.Text
+        NodeArray(1, 0) = MainDialogue.TextBox2.Text
 
         'mark origin node
         NodeArray(2, 0) = GridChart.GridSize / 2
@@ -74,8 +74,8 @@ Module Module1
         Do Until CurrentLayerSize > TotalDaughterGoal
             'Layer Iteration
             CurrentLayerSize = CurrentMaxNodeCreated - PreviousLayerEnd
-            Form1.Label10.Text = CurrentLayerSize
-            Form1.Label10.Refresh()
+            MainDialogue.Label10.Text = CurrentLayerSize
+            MainDialogue.Label10.Refresh()
             For i = 0 To (CurrentLayerSize - 1)
                 'Node Iteration
 
@@ -86,29 +86,29 @@ Module Module1
                 Next
 
                 CreateDaughter(CurrentNode, False)
-                If RandInt(100) <= Form1.TextBox3.Text Then
+                If RandInt(100) <= MainDialogue.TextBox3.Text Then
                     'Bifurcate
                     CreateDaughter(CurrentNode, True)
                     BifCounter += 1
-                    Form1.Label6.Text = BifCounter
-                    Form1.Label6.Refresh()
+                    MainDialogue.Label6.Text = BifCounter
+                    MainDialogue.Label6.Refresh()
                 End If
 
-                Form1.Label4.Text = CurrentMaxNodeCreated
-                Form1.Label4.Refresh()
-                Form1.Label8.Text = CurrentNode
-                Form1.Label8.Refresh()
+                MainDialogue.Label4.Text = CurrentMaxNodeCreated
+                MainDialogue.Label4.Refresh()
+                MainDialogue.Label8.Text = CurrentNode
+                MainDialogue.Label8.Refresh()
 
             Next
             LayerCounter += 1
-            Form1.Label5.Text = LayerCounter
-            Form1.Label5.Refresh()
+            MainDialogue.Label5.Text = LayerCounter
+            MainDialogue.Label5.Refresh()
             PreviousLayerEnd = CurrentNode
             CurrentLayerSize = CurrentMaxNodeCreated - PreviousLayerEnd
         Loop
         CurrentLayerSize = CurrentMaxNodeCreated - PreviousLayerEnd
-        Form1.Label10.Text = CurrentLayerSize
-        Form1.Label10.Refresh()
+        MainDialogue.Label10.Text = CurrentLayerSize
+        MainDialogue.Label10.Refresh()
         'End Matter
         SaveArrays()
 
@@ -122,8 +122,8 @@ Module Module1
     Public Sub SaveArrays()
         Dim CognateSetString As String = ""
         Dim file As System.IO.StreamWriter
-        Form1.ProgressText.Text = "Saving results to file..."
-        Form1.ProgressText.Refresh()
+        MainDialogue.ProgressText.Text = "Saving results to file..."
+        MainDialogue.ProgressText.Refresh()
         System.IO.File.WriteAllText("CognateSets.txt", "") 'clears file
         file = My.Computer.FileSystem.OpenTextFileWriter("CognateSets.txt", True)
         For i = 0 To CurrentMaxNodeCreated
@@ -157,8 +157,8 @@ Module Module1
             TotalCogs += NumberOfAlternates(i)
         Next
         Dim file As System.IO.StreamWriter
-        Form1.ProgressText.Text = "Saving Terminal Descendents to file..."
-        Form1.ProgressText.Refresh()
+        MainDialogue.ProgressText.Text = "Saving Terminal Descendents to file..."
+        MainDialogue.ProgressText.Refresh()
         System.IO.File.WriteAllText("TerminalCognateSets.nex", "") 'clears file
         file = My.Computer.FileSystem.OpenTextFileWriter("TerminalCognateSets.nex", True)
         file.WriteLine("#NEXUS")
@@ -217,8 +217,8 @@ Module Module1
         Dim ReconnectedText = ""
         Dim NewickBound
         Dim str As String
-        Form1.ProgressText.Text = "Encoding Newick Tree..."
-        Form1.ProgressText.Refresh()
+        MainDialogue.ProgressText.Text = "Encoding Newick Tree..."
+        MainDialogue.ProgressText.Refresh()
 
         For i = CurrentMaxNodeCreated To 1 Step -1
             CurrentParent = NodeArray(0, i)
@@ -246,14 +246,14 @@ Module Module1
                 ReconnectedText = SplitText & InsertText & ")" & CurrentParent
                 NewickArray(CurrentParent) = ReconnectedText
             End If
-            Form1.Label8.Text = i
-            Form1.Label8.Refresh()
+            MainDialogue.Label8.Text = i
+            MainDialogue.Label8.Refresh()
             NewickBound = UBound(NewickArray) - 1
             ReDim Preserve NewickArray(NewickBound)
         Next
         Dim file As System.IO.StreamWriter
-        Form1.ProgressText.Text = "Saving results to file..."
-        Form1.ProgressText.Refresh()
+        MainDialogue.ProgressText.Text = "Saving results to file..."
+        MainDialogue.ProgressText.Refresh()
         System.IO.File.WriteAllText("Solution.tree", "") 'clears file
         file = My.Computer.FileSystem.OpenTextFileWriter("Solution.tree", True)
         file.WriteLine(NewickArray(0))
