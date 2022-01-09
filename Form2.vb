@@ -1,9 +1,12 @@
-﻿Public Class GridChart
+﻿
+
+Public Class GridChart
     Public GraphWidth, GraphHeight As Integer
     Public GridSize As Integer = 50
     Public LabelList As New List(Of Label)
     Public PointsInitialised As Boolean = False
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        GridSize = My.Settings.GridSize
         Initialise_Points()
 
 
@@ -14,20 +17,27 @@
         Dim ProgStep As Decimal = 50 / TotalPoints
         Dim ProgCounter As Decimal = 0
         Dim newLabel As Label
+
         For i = 1 To TotalPoints
-            newLabel = New Label With {
+                newLabel = New Label With {
                 .Name = "Label" & i,
-                .Text = "+",
+                .Text = "",
                 .Size = New System.Drawing.Size(30, 14)
             }
+
             Me.Controls.Add(newLabel)
+
             LabelList.Add(newLabel)
             ProgCounter += ProgStep
             LoadingBar.ProgressBar1.Value = Int(ProgCounter)
         Next
+
+
         PointsInitialised = True
-        LoadingBar.Hide()
-        Draw_Grid()
+            LoadingBar.Hide()
+            Draw_Grid()
+
+
     End Sub
     Private Sub Draw_Grid()
         LoadingBar.Show()
@@ -44,14 +54,15 @@
             For x = 1 To GridSize
                 CurrentLocation(0) = 30 + (x * GridStep(0))
                 For y = 1 To GridSize
-
                     CurrentLocation(1) = 30 + (y * GridStep(1))
-                    LabelList(CurrentOfTotal).Location = New System.Drawing.Point(CurrentLocation(0), CurrentLocation(1))
+                    LabelList(CurrentOfTotal).Location = New Point(CurrentLocation(0), CurrentLocation(1))
                     CurrentOfTotal += 1
                     ProgCounter += ProgStep
                     LoadingBar.ProgressBar1.Value = Int(ProgCounter)
                 Next
             Next
+
+
         End If
         LoadingBar.Close()
     End Sub

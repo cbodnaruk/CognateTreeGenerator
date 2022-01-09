@@ -5,8 +5,8 @@ Module Module1
     Public CurrentNode As Integer
     Public CurrentMaxNodeCreated As Integer
     Public NodeArray(3, 0) As Integer 'parentID, change rate, location x,y
-    Public CognateArray(499, 0)
-    Public NumberOfAlternates(499) As Integer
+    Public CognateArray(My.Settings.NumberOfCognates, 0)
+    Public NumberOfAlternates(My.Settings.NumberOfCognates) As Integer
     Public CurrentLayerSize As Integer
     Public NumberOfCognates As Integer
     Public Function GenerateCognateWeighting()
@@ -93,6 +93,7 @@ Module Module1
                     Form1.Label6.Text = BifCounter
                     Form1.Label6.Refresh()
                 End If
+
                 Form1.Label4.Text = CurrentMaxNodeCreated
                 Form1.Label4.Refresh()
                 Form1.Label8.Text = CurrentNode
@@ -152,7 +153,7 @@ Module Module1
                 CountedBinarySet.Clear()
             Next
         Next
-        For i = 0 To 499
+        For i = 0 To My.Settings.NumberOfCognates
             TotalCogs += NumberOfAlternates(i)
         Next
         Dim file As System.IO.StreamWriter
@@ -167,8 +168,8 @@ Module Module1
         file.WriteLine("FORMAT DATATYPE=STANDARD MISSING=? GAP=-  SYMBOLS=""01"";")
         file.WriteLine("CHARSTATELABELS")
         'build charstatelabel table
-        For i = 0 To 499
-            If i = 499 Then
+        For i = 0 To NumberOfCognates
+            If i = NumberOfCognates Then
                 For j = 1 To NumberOfAlternates(i)
                     If j = NumberOfAlternates(i) Then
                         file.WriteLine(vbTab & vbTab & CumPos & " cog" & i & "_" & j & ";")
@@ -201,7 +202,7 @@ Module Module1
         file.WriteLine("end;")
         'list out groups of cognates
         file.WriteLine("begin assumptions;")
-        For i = 0 To 499
+        For i = 0 To NumberOfCognates
             file.WriteLine(vbTab & "charset cog" & i & " = " & CumPos & "-" & CumPos + NumberOfAlternates(i) - 1 & ";")
             CumPos += NumberOfAlternates(i)
         Next
@@ -264,6 +265,7 @@ Module Module1
     Public Sub CreateDaughter(parent, bi)
         'ReDim
         Dim DaughterId As Integer = CurrentMaxNodeCreated + 1
+        Dim distance, BorrowId As Integer
         ReDim Preserve NodeArray(3, DaughterId)
         ReDim Preserve CognateArray(NumberOfCognates, DaughterId)
 
@@ -271,6 +273,18 @@ Module Module1
         For i = 0 To NumberOfCognates
             CognateArray(i, DaughterId) = CognateArray(i, parent)
         Next
+
+        'check distance from other living nodes
+        For i = (parent + 1) To DaughterId - 1
+            distance = Rnd(Math.Sqrt((Math.Abs(NodeArray(2, DaughterId) - NodeArray(2, i)) ^ 2) + (Math.Abs(NodeArray(2, DaughterId) - NodeArray(2, i)) ^ 2)))
+            If distance < 6 Then
+                For j = distance To 6
+                    BorrowId = SelectCognate(CognateWeighting)
+                    CognateArray(BorrowId, DaughterId) = CognateArray(BorrowId, i)
+                Next
+            End If
+        Next
+        'borrow forms if close enough
 
         'write metadata
         NodeArray(0, DaughterId) = parent
@@ -327,10 +341,10 @@ Module Module1
                 End If
 
             ElseIf cont = "-" And .Text = "@|" Then
-                    .Text = "@"
-                    .Refresh()
-                Else
-                    .Text = cont
+                .Text = "@"
+                .Refresh()
+            Else
+                .Text = cont
                 .Refresh()
             End If
         End With
@@ -339,7 +353,7 @@ Module Module1
         Dim ParentNode = NodeArray(0, NodeId)
         'select direction
         Dim dir = RandInt(4)
-        Dim dist = RandInt(4)
+        Dim dist = RandInt(4) 'distance stepped each time
 
         'write new node
         If dir = 1 Then
@@ -366,4 +380,5 @@ Module Module1
             WritePointVis(NodeArray(2, ParentNode), NodeArray(3, ParentNode), "-")
         End If
     End Sub
+
 End Module

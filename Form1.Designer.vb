@@ -44,6 +44,10 @@ Partial Class Form1
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Button2 = New System.Windows.Forms.Button()
+        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.TextBox5 = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'StartButton
@@ -58,7 +62,7 @@ Partial Class Form1
         'ProgressText
         '
         Me.ProgressText.AutoSize = True
-        Me.ProgressText.Location = New System.Drawing.Point(12, 305)
+        Me.ProgressText.Location = New System.Drawing.Point(12, 178)
         Me.ProgressText.Name = "ProgressText"
         Me.ProgressText.Size = New System.Drawing.Size(0, 13)
         Me.ProgressText.TabIndex = 1
@@ -174,7 +178,7 @@ Partial Class Form1
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(9, 206)
+        Me.Label11.Location = New System.Drawing.Point(9, 267)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(161, 13)
         Me.Label11.TabIndex = 16
@@ -182,7 +186,7 @@ Partial Class Form1
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(195, 202)
+        Me.TextBox1.Location = New System.Drawing.Point(195, 263)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(100, 20)
         Me.TextBox1.TabIndex = 17
@@ -191,7 +195,7 @@ Partial Class Form1
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(9, 231)
+        Me.Label12.Location = New System.Drawing.Point(9, 292)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(177, 13)
         Me.Label12.TabIndex = 18
@@ -199,7 +203,7 @@ Partial Class Form1
         '
         'TextBox2
         '
-        Me.TextBox2.Location = New System.Drawing.Point(195, 228)
+        Me.TextBox2.Location = New System.Drawing.Point(195, 289)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(100, 20)
         Me.TextBox2.TabIndex = 19
@@ -208,7 +212,7 @@ Partial Class Form1
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(9, 254)
+        Me.Label13.Location = New System.Drawing.Point(9, 315)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(180, 13)
         Me.Label13.TabIndex = 20
@@ -216,7 +220,7 @@ Partial Class Form1
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(195, 254)
+        Me.TextBox3.Location = New System.Drawing.Point(195, 315)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(100, 20)
         Me.TextBox3.TabIndex = 21
@@ -225,7 +229,7 @@ Partial Class Form1
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(98, 277)
+        Me.Label14.Location = New System.Drawing.Point(94, 338)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(223, 13)
         Me.Label14.TabIndex = 22
@@ -240,11 +244,47 @@ Partial Class Form1
         Me.Button2.Text = "Reset"
         Me.Button2.UseVisualStyleBackColor = True
         '
+        'TextBox4
+        '
+        Me.TextBox4.Location = New System.Drawing.Point(195, 237)
+        Me.TextBox4.Name = "TextBox4"
+        Me.TextBox4.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox4.TabIndex = 24
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(9, 240)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(134, 13)
+        Me.Label15.TabIndex = 25
+        Me.Label15.Text = "Total Number of Cognates:"
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(9, 214)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(105, 13)
+        Me.Label16.TabIndex = 27
+        Me.Label16.Text = "Areal View Grid Size:"
+        '
+        'TextBox5
+        '
+        Me.TextBox5.Location = New System.Drawing.Point(195, 211)
+        Me.TextBox5.Name = "TextBox5"
+        Me.TextBox5.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox5.TabIndex = 26
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(333, 327)
+        Me.ClientSize = New System.Drawing.Size(333, 360)
+        Me.Controls.Add(Me.Label16)
+        Me.Controls.Add(Me.TextBox5)
+        Me.Controls.Add(Me.Label15)
+        Me.Controls.Add(Me.TextBox4)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Label14)
         Me.Controls.Add(Me.TextBox3)
@@ -298,4 +338,8 @@ Partial Class Form1
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents Label14 As Label
     Friend WithEvents Button2 As Button
+    Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents Label15 As Label
+    Friend WithEvents Label16 As Label
+    Friend WithEvents TextBox5 As TextBox
 End Class
