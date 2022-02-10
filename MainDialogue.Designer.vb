@@ -299,6 +299,7 @@ Partial Class MainDialogue
         '
         'TabPage1
         '
+        Me.TabPage1.BackColor = System.Drawing.SystemColors.Control
         Me.TabPage1.Controls.Add(Me.Label15)
         Me.TabPage1.Controls.Add(Me.TextBox4)
         Me.TabPage1.Controls.Add(Me.Label12)
@@ -314,10 +315,10 @@ Partial Class MainDialogue
         Me.TabPage1.Size = New System.Drawing.Size(325, 167)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "General"
-        Me.TabPage1.UseVisualStyleBackColor = True
         '
         'TabPage2
         '
+        Me.TabPage2.BackColor = System.Drawing.SystemColors.Control
         Me.TabPage2.Controls.Add(Me.ArealCheck)
         Me.TabPage2.Controls.Add(Me.Label18)
         Me.TabPage2.Controls.Add(Me.TextBox6)
@@ -330,7 +331,6 @@ Partial Class MainDialogue
         Me.TabPage2.Size = New System.Drawing.Size(325, 167)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Areal Simulation"
-        Me.TabPage2.UseVisualStyleBackColor = True
         '
         'Label17
         '
